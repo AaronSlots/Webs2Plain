@@ -16,7 +16,7 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->bigInteger('billing_card_id');
+            $table->bigInteger('billing_card_id')->unsigned();
             $table->foreign('billing_card_id')->references('id')->on('billing_cards');
             $table->string('name');
             $table->string('stripe_id')->collation('utf8mb4_bin');

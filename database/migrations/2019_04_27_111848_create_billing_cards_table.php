@@ -15,7 +15,7 @@ class CreateBillingCardsTable extends Migration
     {
         Schema::create('billing_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
             $table->string('stripe_id')->nullable()->collation('utf8mb4_bin');

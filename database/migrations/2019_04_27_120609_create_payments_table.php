@@ -15,8 +15,9 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->string('id');
+            $table->primary('id');
             $table->boolean('isPayed')->default(false);
-            $table->biginteger('billing_card_id');
+            $table->biginteger('billing_card_id')->unsigned();
             $table->foreign('billing_card_id')->references('id')->on('billing_cards');
             $table->timestamps();
         });
