@@ -18,7 +18,7 @@ class CreateCardsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('iban');
             $table->string('display_name');
-            $table->unique('user_id','iban');
+            $table->unique(['user_id','iban']);
 
             $table->foreign('user_id')->references('id')->on('users');
 

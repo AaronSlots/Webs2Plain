@@ -8,16 +8,17 @@ use App\Card;
 class CardController extends Controller
 {
     public function __construct(){
-        $this->middleware('card:'.$this->card(), ['except' => ['getCards','showCreateCard','showUpdateCard','updateCard','createCard','selectCard']]);
-        $this->middleware('auth', ['only' => ['getCards','showCreateCard','showUpdateCard','updateCard','createCard','selectCard']]);
+        $this->middleware('card:'.$this->card(), ['except' => ['getCards','showCreateCard','showUpdateCard','updateCard','selectCard']]);
+        $this->middleware('verified', ['only' => ['getCards','showCreateCard','showUpdateCard','updateCard','selectCard']]);
     }
 
     public function getCards(){
-        return view('cards.show', ['cards'=>auth()->user()->cards()]);
+        $cards=auth()->user()->cards;
+        return view('cards.show', ['cards'=>$cards]);
     }
 
     public function selectCard(){
-        $card = \Input::get('card');
+        $card = Card::find(\Input::get('card_id'));
         session(['card'=>$card]);
     }
 
@@ -41,18 +42,16 @@ class CardController extends Controller
     }
 
     public function updateCard(){
+        $iban = \Input::get('iban');
+        $display_name = \Input::get('display_name');
         if(\Input::has('card_id')){
-            $this->editCard();
+            $card=Card::find(\Input::get('card_id'));
+            $card->iban=$iban;
+            $card->display_name=$display_name;
+            $card->save();
         } else {
-            $this->createCard();
+            Card::create(['iban'=>$iban,'display_name'=>$display_name,'user_id'=>auth()->user()->id]);
         }
-    }
-
-    private function createCard(){
-
-    }
-
-    private function editCard(){
-
+        return redirect('/card/payments');
     }
 }

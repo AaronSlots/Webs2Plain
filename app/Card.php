@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
-    //
+    protected $fillable = ['iban','display_name','user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

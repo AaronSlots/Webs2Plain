@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a class="nav-link" href="card/select">{{ __('navbar.select_card') }}</a>
+    <a class="nav-link" href="/card/select">{{ __('navbar.select_card') }}</a>
 </li>
 
 <li class="nav-item dropdown">
@@ -11,7 +11,7 @@
         <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-            {{ __('Logout') }}
+            {{ __('navbar.logout') }}
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
