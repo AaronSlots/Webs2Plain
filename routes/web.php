@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', function () {
+    return view('general');
+});
 
-Route::get('/cards', 'CardsController@index')->middleware('auth');
+Auth::routes(['verify' => true]);
 
-Auth::routes();
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/card/select', 'CardController@getCards');
+Route::post('/card/select', 'CardController@selectCard');
+Route::get('/card/new','CardController@showCreateCard');
+

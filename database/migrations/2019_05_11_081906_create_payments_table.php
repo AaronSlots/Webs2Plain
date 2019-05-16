@@ -14,11 +14,11 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->string('id');
-            $table->primary('id');
-            $table->boolean('isPayed')->default(false);
-            $table->biginteger('billing_card_id')->unsigned();
-            $table->foreign('billing_card_id')->references('id')->on('billing_cards');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('card_id');
+            $table->bigInteger('amount');
+            $table->string('currency_code');
+            $table->foreign('currency_code')->references('code')->on('currencies');
             $table->timestamps();
         });
     }

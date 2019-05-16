@@ -1,18 +1,25 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="">Sentje</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="">Home</a>
-      @if(Auth::guest())
-        <a class="nav-item nav-link" href="/login">Inloggen</a>
-         <a class="nav-item nav-link" href="/register">Registreren</a>
-      @else
-        <a class="nav-item nav-link" href="/cards">Rekeningen</a>
-        <a class="nav-item nav-link" href="/logout">Uitloggen</a>
-      @endif
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-white shadow-sm">
+    <a class="navbar-brand" href="{{ url('/') }}">
+        {{ config('app.name', 'Sentje') }}
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left Side Of Navbar -->
+        <ul class="navbar-nav mr-auto">
+
+        </ul>
+
+        <!-- Right Side Of Navbar -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Authentication Links -->
+            @guest
+                @include('partials.navbar-items.guests')
+            @else
+                @include('partials.navbar-items.users')
+            @endguest
+        </ul>
     </div>
-  </div>
 </nav>
