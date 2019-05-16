@@ -17,7 +17,7 @@ class CardController extends Controller
     }
 
     public function selectCard(){
-        $card = Input::get('card');
+        $card = \Input::get('card');
         session(['card'=>$card]);
     }
 
@@ -41,7 +41,7 @@ class CardController extends Controller
     }
 
     public function updateCard(){
-        if(Input::has('card_id')){
+        if(\Input::has('card_id')){
             $this->editCard();
         } else {
             $this->createCard();
