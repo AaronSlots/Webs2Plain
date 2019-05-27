@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use \Input;
 use App\Card;
 
 class CardController extends Controller
 {
     public function __construct(){
-        $this->middleware('card:'.$this->card(), ['except' => ['getCards','showCreateCard','showUpdateCard','updateCard','selectCard']]);
-        $this->middleware('verified', ['only' => ['getCards','showCreateCard','showUpdateCard','updateCard','selectCard']]);
+        $this->middleware('verified');
     }
 
     public function getCards(){
@@ -17,41 +16,43 @@ class CardController extends Controller
         return view('cards.show', ['cards'=>$cards]);
     }
 
-    public function selectCard(){
-        $card = Card::find(\Input::get('card_id'));
-        session(['card'=>$card]);
-    }
-
     public function showCreateCard(){
-        $card = new Card();
-        return $this->showUpdateCard($card,'/card/new');
+        return $this->showUpdateCard('/card/new');
     }
 
-    private function card(){
-        return session('card');
+    private function showUpdateCard($iban_hash = null,$url){
+        $card=$this->findCard();
+        if(!$card)
+            $card=new Card;
+        return view('cards.update',['iban'=>Crypt::decrypt($card->iban),'display_name'=>Crypt::decrypt($card->display_name),'url'=>$url]);
     }
 
-    private function showUpdateCard($card,$url){
-
-        return view('cards.update',['iban'=>$card->iban,'display_name'=>$card->display_name,'card_id'=>$card->id,'url'=>$url]);
+    public function showEditCard($iban_hash){
+        return $this->showUpdateCard($iban_hash, '/card/edit/'.$iban_hash);
     }
 
-    public function showEditCard(){
-        $card = $this->card();
-        return $this->showUpdateCard($card,'/card/edit');
-    }
-
-    public function updateCard(){
-        $iban = \Input::get('iban');
-        $display_name = \Input::get('display_name');
-        if(\Input::has('card_id')){
-            $card=Card::find(\Input::get('card_id'));
-            $card->iban=$iban;
-            $card->display_name=$display_name;
-            $card->save();
-        } else {
+    public function updateCard($iban_hash = null){
+        $card=$this->findCard($iban_hash);
+        if(!$card){
             Card::create(['iban'=>$iban,'display_name'=>$display_name,'user_id'=>auth()->user()->id]);
+        } else {
+            $card->iban=Crypt::encrypt(Input::get('iban'));
+            $card->display_name=Crypt::encrypt(Input::get('display_name'));
+            $card->save();
         }
-        return redirect('/card/payments');
+        return redirect('/card/select');
+    }
+
+    private function findCard($iban_hash){
+        if($iban_hash == null)
+            return false;
+
+        foreach(auth()->user()->cards as $card){
+            if(Hash::check(Crypt::decrypt($card->iban), $iban_hash)){
+                return $card;
+            }
+        }
+
+        return false;
     }
 }

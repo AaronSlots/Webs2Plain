@@ -11,10 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            CurrencySeeder::class,
-            PaymentOptionSeeder::class,
-            PaymentOption_CountrySeeder::class,
-        ]);
+        // $this->call(UsersTableSeeder::class);
     }
 }

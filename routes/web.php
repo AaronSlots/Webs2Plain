@@ -12,17 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('general');
+    return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/card/select', 'CardController@getCards');
-Route::post('/card/select', 'CardController@selectCard');
-Route::get('/card/new','CardController@showCreateCard');
-Route::get('/card/edit','CardController@showEditCard');
-Route::post('/card/new', 'CardController@updateCard');
-Route::post('/card/edit', 'CardController@updateCard');
-
