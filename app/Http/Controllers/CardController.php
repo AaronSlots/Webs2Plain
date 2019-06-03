@@ -11,8 +11,8 @@ class CardController extends Controller
         $this->middleware('verified');
     }
 
-    public function getCards(){
-        $cards=auth()->user()->cards;
+    public function showCards(){
+        $cards=auth()->user()->cards??[];
         return view('cards.show', ['cards'=>$cards]);
     }
 
@@ -20,15 +20,15 @@ class CardController extends Controller
         return $this->showUpdateCard('/card/new');
     }
 
-    private function showUpdateCard($iban_hash = null,$url){
-        $card=$this->findCard();
+    private function showUpdateCard($id_crypt = null, $iban_hash = null){
+        $card=$this->findCard($id_crypt,$iban_hash);
         if(!$card)
             $card=new Card;
-        return view('cards.update',['iban'=>Crypt::decrypt($card->iban),'display_name'=>Crypt::decrypt($card->display_name),'url'=>$url]);
+        return view('cards.update',['id'=>$card->id,'iban'=>Crypt::decrypt($card->iban),'description'=>Crypt::decrypt($card->description),'url'=>$url]);
     }
 
-    public function showEditCard($iban_hash){
-        return $this->showUpdateCard($iban_hash, '/card/edit/'.$iban_hash);
+    public function showEditCard($id_crypt,$iban_hash){
+        return $this->showUpdateCard($iban_hash, '/card/'.$id_crypt.'/'.$iban_hash.'/update');
     }
 
     public function updateCard($iban_hash = null){
@@ -43,16 +43,10 @@ class CardController extends Controller
         return redirect('/card/select');
     }
 
-    private function findCard($iban_hash){
-        if($iban_hash == null)
+    private function findCard($id_crypt,$iban_hash){
+        if($id_crypt == null)
             return false;
-
-        foreach(auth()->user()->cards as $card){
-            if(Hash::check(Crypt::decrypt($card->iban), $iban_hash)){
-                return $card;
-            }
-        }
-
-        return false;
+        $card=auth()->user()->cards->find(Crypt::decrypt($id_crypt));
+        return Hash::check(Crypt::decrypt($card->iban), $iban_hash)?$card:false;
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
-    protected $fillable = ['iban','display_name','user_id'];
+    protected $fillable = ['iban','description','user_id'];
 
     public function user()
     {

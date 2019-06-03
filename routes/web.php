@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes(['verify'=>true]);
 
-Auth::routes();
+Route::get('/', function()
+{
+    return redirect('/card/select');
+})->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/card/select', 'CardController@showCards');

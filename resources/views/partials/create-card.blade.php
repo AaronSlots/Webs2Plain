@@ -1,6 +1,6 @@
-<div class="card">
+<a class="btn card bg-success text-white" style="width: 18rem;" href="/card/new">
     <div class="card-header">{{ __('cards.new') }}</div>
     <div class="card-body">
-        <a href="/card/new" class="btn btn-primary">{{ __('cards.new_link') }}</a>
+        <p class="card-text">{{ __('cards.new_link') }}</p>
     </div>
-</div>
+</a>

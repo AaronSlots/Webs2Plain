@@ -4,6 +4,6 @@
     @if(isset($card_id))
         {{ Form::hidden('card_id',$card_id) }}
     @endif
-    @include('partials.forms.display_name')
     @include('partials.forms.iban')
+    @include('partials.forms.description')
 @endsection

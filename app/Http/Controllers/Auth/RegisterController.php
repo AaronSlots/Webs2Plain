@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,7 +50,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255','regex:/^[A-Z][a-z]+$/'],
+            'lastname' => ['required', 'string', 'max:255', 'regex:/^[A-Z][a-z]+$/'],
+            'prepositons' => ['string', 'max:255', 'regex:/^(?:[a-z]{2,}(?: [a-z]{2,})*)?$/'],
+            'country_iso' => ['required','string','regex:/^[A-Z]{2}$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,7 +68,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'firstname' => Crypt::encrypt($data['firstname']),
+            'prepositions' => Crypt::encrypt($data['prepositions']),
+            'lastname' => Crypt::encrypt($data['lastname']),
+            'country_iso' => Crypt::encrypt($data['country_iso']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

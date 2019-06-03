@@ -1,10 +1,6 @@
-<div class="card">
-    <div class="card-header">{{ $card->display_name }}</div>
+<a class="btn card bg-primary text-white" style="width:18rem;" href="/card/{{ Crypt::encrypt($card->id) }}/{{ Hash::make(Crypt::decrypt($card->iban)) }}/payments">
+    <div class="card-header">{{ Crypt::decrypt($card->iban) }}</div>
     <div class="card-body">
-        <p class="card-text">{{ $card->iban }}</p>
-        {{ Form::open(['url'=>'/card/select','method'=>'post']) }}
-        {{ Form::hidden('card_id',$card->id) }}
-        {{ Form::button(__('forms/buttons.select'),['type'=>'submit','class'=> 'btn btn-primary']) }}
-        {{ Form::close() }}
+        <p class="card-text">{{ Crypt::decrypt($card->description) }}</p>
     </div>
-</div>
+</a>
