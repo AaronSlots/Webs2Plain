@@ -19,3 +19,5 @@ Route::get('/', function()
 })->name('home');
 
 Route::get('/card/select', 'CardController@showCards');
+Route::get('/card/new', 'CardController@showNew');
+Route::get('/card/{id_crypt}/{iban_hash}/overview', 'CardController@overview');
