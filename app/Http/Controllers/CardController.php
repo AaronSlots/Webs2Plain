@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use \Input;
 use App\Card;
+use Illuminate\Support\Str;
+use \Crypt;
 
 class CardController extends Controller
 {
@@ -13,11 +15,11 @@ class CardController extends Controller
 
     public function showCards(){
         $cards=auth()->user()->cards??[];
-        return view('cards.show', ['cards'=>$cards]);
+        return view('cards.show', ['cards'=>$cards,'rndm'=>Crypt::encrypt(Str::random())]);
     }
 
     public function showCreateCard(){
-        return $this->showUpdateCard('/card/new');
+        return $this->showUpdateCard();
     }
 
     private function showUpdateCard($id_crypt = null, $iban_hash = null){
