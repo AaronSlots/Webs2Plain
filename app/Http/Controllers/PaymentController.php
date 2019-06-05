@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \Crypt;
+use \Cache;
 
 class PaymentController extends Controller
 {
@@ -17,7 +19,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments=$this->card()->payments??[];
+        return view('payments.show', ['payments'=>$payments]);
     }
 
     /**
@@ -84,5 +87,9 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function card(){
+        $id = auth()->user()->cards->find(Crypt::decrypt(Cache::get('card_id')));
     }
 }

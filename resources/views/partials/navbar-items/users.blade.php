@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a class="nav-link" href="/card/select">{{ __('navbar.select_card') }}</a>
+    <a class="nav-link" href="/cards">{{ __('navbar.select_card') }}</a>
 </li>
 
 <li class="nav-item dropdown">
