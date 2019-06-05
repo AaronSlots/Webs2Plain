@@ -3,7 +3,7 @@
 @section('content')
     <div class="card-deck">
         @foreach ($cards as $card)
-            @include('partials.card',['card'=>$card,'rndm'=>$rndm])
+            @include('partials.card',['card'=>$card])
         @endforeach
         @include('partials.create-card')
     </div>

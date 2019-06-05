@@ -15,9 +15,8 @@ Auth::routes(['verify'=>true]);
 
 Route::get('/', function()
 {
-    return redirect('/card/select');
+    return redirect('/cards');
 })->name('home');
 
-Route::get('/card/select', 'CardController@showCards');
-Route::get('/card/new', 'CardController@showNew');
-Route::get('/card/{id_crypt}/{iban_hash}/overview', 'CardController@overview');
+Route::resource('cards', 'CardController');
+Route::resource('payments', 'PaymentController');
