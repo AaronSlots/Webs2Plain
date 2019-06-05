@@ -12,4 +12,9 @@ class Payment extends Model
     {
         return $this->belongsTo('App\Card');
     }
+
+    public function currency()
+    {
+        return $this->belongsTo('App\Currency');
+    }
 }
