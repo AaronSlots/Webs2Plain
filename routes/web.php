@@ -20,3 +20,6 @@ Route::get('/', function()
 
 Route::resource('cards', 'CardController');
 Route::resource('payments', 'PaymentController');
+Route::resource('contacts', 'ContactController')->except(['edit','update','show']);
+Route::get('contacts/confirm/{token}', 'ContactController@confirm')->name('contacts.confirm');
+Route::get('contacts/{contact}/favourite', 'ContactController@favourite');

@@ -4,11 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ContactList extends Model
+class ContactUser extends Model
 {
     protected $fillable = ['user_id','contact_id','favourite'];
-
-    protected $primaryKey = 'primary';
 
     public function user()
     {

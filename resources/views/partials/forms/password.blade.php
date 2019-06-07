@@ -9,4 +9,4 @@
             <li>{{ $requirement }}</li>
         @endforeach
     </ul>
-@endsection
+    @stop

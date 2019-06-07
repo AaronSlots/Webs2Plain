@@ -5,4 +5,4 @@
         @include('partials.payment',['payment'=>$payment])
     @endforeach
     @include('partials.create-payment')
-@endsection
+    @stop

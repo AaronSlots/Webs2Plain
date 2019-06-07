@@ -2,4 +2,4 @@
 
 @section('form-content-attribute-lastname')
     <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" required pattern="^[A-Z][a-z]+$" autocomplete="lastname">
-@endsection
+    @stop

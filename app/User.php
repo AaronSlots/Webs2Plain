@@ -49,6 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function contacts()
     {
-        return $this->hasMany('App\Contactlist');
+        return $this->hasMany('App\ContactUser');
     }
 }

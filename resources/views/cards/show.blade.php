@@ -7,4 +7,4 @@
         @endforeach
         @include('partials.create-card')
     </div>
-@endsection
+    @stop
