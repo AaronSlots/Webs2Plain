@@ -37,6 +37,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullnameAttribute(){
+        if($this->prepositions == null){
+            return \Crypt::decrypt($this->firstname).' '.\Crypt::decrypt($this->lastname);
+        } else{
+            return \Crypt::decrypt($this->firstname).' '.\Crypt::decrypt($this->prepositions).' '.\Crypt::decrypt($this->lastname);
+        }
+    }
+
     public function cards()
     {
         return $this->hasMany('App\Card');
