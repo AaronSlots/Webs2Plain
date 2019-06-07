@@ -8,6 +8,8 @@ use App\ContactUser;
 use App\Mail\ConfirmContactMail;
 use \Cache;
 use \Str;
+use \Crypt;
+use \Mail;
 
 class ContactController extends Controller
 {
@@ -33,16 +35,16 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('contacts.add');
+        $url=route('contacts.store');
+        return view('contacts.add',['url'=>$url]);
     }
 
     public function confirm($confirmation)
     {
         $user=Cache::get($confirmation, null);
         Cache::forget($confirmation);
-        if(auth()->user()->id==$user->id){
-            $user->save();
-        }
+        $user->save();
+        return redirect()->route('contacts.index');
     }
 
     public function switchFavourite($id){
@@ -57,19 +59,20 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->user==auth()->user()->id){
+        if($request->contact==auth()->user()->id||User::find($request->contact)==null||Crypt::decrypt(User::find($request->contact)->invite_number)==$request->confirm_contact){
             return redirect()->back();
         }
         $confirmation_number = Str::random(20);
         while(Cache::has($confirmation_number)){
             $confirmation_number = Str::random(20);
         }
-        $contact=User::find($request->user);
+        $contact=User::find($request->contact);
         $contact_user=new ContactUser();
         $contact_user->user_id=auth()->user()->id;
         $contact_user->contact_id=$contact->id;
-        Cache::add($confirmation_number, $contact_user, 15);
-        Mail::to($contact)->send(new ConfirmContactMail());
+        Cache::put($confirmation_number, $contact_user, now()->addMinutes(15));
+        Mail::to($contact)->send(new ConfirmContactMail($confirmation_number));
+        return redirect()->route('contacts.index');
     }
 
     /**

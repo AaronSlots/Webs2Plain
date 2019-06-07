@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use \Str;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,7 @@ class RegisterController extends Controller
             'country_iso' => Crypt::encrypt($data['country_iso']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'invite_number' => Crypt::encrypt(Str::random(20)),
         ]);
     }
 }
