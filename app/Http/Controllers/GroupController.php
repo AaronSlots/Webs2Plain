@@ -13,7 +13,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = auth()->user()->groups;
+        return view('groups.show', ['groups'=>$groups]);
     }
 
     /**
