@@ -19,10 +19,7 @@ class CreateCardsTable extends Migration
             $table->string('iban');
             $table->longText('description')->nullable();
             $table->unique(['user_id','iban']);
-
             $table->foreign('user_id')->references('id')->on('users');
-
-            $table->timestamps();
         });
     }
 

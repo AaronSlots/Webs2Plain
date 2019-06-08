@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     protected $fillable = ['iban','description','user_id'];
+    public $timestamps = false;
 
     public function user()
     {

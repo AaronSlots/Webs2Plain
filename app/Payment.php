@@ -8,6 +8,8 @@ class Payment extends Model
 {
     protected $fillable = ['iban','amount','card_id', 'currency_code'];
 
+    public $timestamps = false;
+
     public function card()
     {
         return $this->belongsTo('App\Card');

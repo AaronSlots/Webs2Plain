@@ -14,13 +14,12 @@ class CreateGroupUsersTable extends Migration
     public function up()
     {
         Schema::create('group_users', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('is_admin')->default(false);
-            $table->primary(['group_id', 'user_id'],'primary');
-            $table->timestamps();
         });
     }
 

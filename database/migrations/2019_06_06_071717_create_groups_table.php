@@ -17,7 +17,6 @@ class CreateGroupsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->longText('description');
-            $table->timestamps();
         });
     }
 

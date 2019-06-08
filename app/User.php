@@ -37,6 +37,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public $timestamps = false;
+
     public function getFullnameAttribute(){
         if($this->prepositions == null){
             return \Crypt::decrypt($this->firstname).' '.\Crypt::decrypt($this->lastname);

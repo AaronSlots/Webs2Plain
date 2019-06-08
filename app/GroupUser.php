@@ -8,7 +8,7 @@ class GroupUser extends Model
 {
     protected $fillable = ['is_admin','group_id','user_id'];
 
-    protected $primaryKey = 'primary';
+    public $timestamps = false;
 
     public function user()
     {

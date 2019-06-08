@@ -20,7 +20,6 @@ class CreateContactUsersTable extends Migration
             $table->bigInteger('contact_id')->unsigned();
             $table->foreign('contact_id')->references('id')->on('users');
             $table->boolean('favourite')->default(false);
-            $table->timestamps();
         });
     }
 

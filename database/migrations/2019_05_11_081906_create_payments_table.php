@@ -20,7 +20,6 @@ class CreatePaymentsTable extends Migration
             $table->bigInteger('amount');
             $table->string('currency_code');
             $table->foreign('currency_code')->references('code')->on('currencies');
-            $table->timestamps();
         });
     }
 
