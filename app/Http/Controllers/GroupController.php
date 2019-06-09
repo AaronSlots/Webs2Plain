@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    public function __construct(){
+        $this->middleware('verified');
+        $this->middleware('groupAdmin:{group}')->except(['index','create','store','leave']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,17 +38,6 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
     {
         //
     }
