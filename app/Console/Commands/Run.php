@@ -38,7 +38,8 @@ class Run extends Command
     public function handle()
     {
         $this->line('<fg=green>Migrating and seeding the database</>');
-        call_in_background('migrate:fresh --seed');
+        call_in_background('migrate:fresh');
+        call_in_background('db:seed');
         $this->line('<fg=green>Laravel development server starting: </><https://www.sentje.com>');
         call_in_background('serve --host www.sentje.com --port 80');
     }

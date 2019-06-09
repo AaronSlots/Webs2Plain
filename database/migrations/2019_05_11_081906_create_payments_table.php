@@ -20,6 +20,9 @@ class CreatePaymentsTable extends Migration
             $table->bigInteger('amount');
             $table->string('currency_code');
             $table->foreign('currency_code')->references('code')->on('currencies');
+            $table->string('period')->nullable();
+            $table->foreign('period')->references('period')->on('periods');
+            $table->date('startdate');
         });
     }
 

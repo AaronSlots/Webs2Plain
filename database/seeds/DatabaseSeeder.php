@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrencySeeder::class);
         $this->call(PaymentOptionSeeder::class);
         $this->call(PaymentOption_CountrySeeder::class);
+        $this->call(PeriodSeeder::class);
     }
 }

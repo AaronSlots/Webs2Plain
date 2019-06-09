@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['iban','amount','card_id', 'currency_code'];
+    protected $fillable = ['iban','amount','card_id', 'currency_code', 'period'];
 
-    public $timestamps = false;
+    public $timestamps = 'startdate';
 
     public function card()
     {
@@ -18,5 +18,10 @@ class Payment extends Model
     public function currency()
     {
         return $this->belongsTo('App\Currency');
+    }
+
+    public function period()
+    {
+        return $this->belongsTo('App\User');
     }
 }
