@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Group;
+use App\GroupUser;
+use \Crypt;
+use \Auth;
 
 class GroupController extends Controller
 {
     public function __construct(){
-        $this->middleware('verified');
-        $this->middleware('groupAdmin:{group}')->except(['index','create','store','leave']);
+
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +31,8 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        $url=route('groups.store');
+        return view('groups.update', ['title'=>null, 'description'=>null, 'url'=>$url]);
     }
 
     /**
@@ -39,7 +43,17 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $group=Group::create([
+            'title'=>Crypt::encrypt($request->title),
+            'description'=>Crypt::encrypt($request->description),
+        ]);
+        $groupuser = new GroupUser();
+        $groupuser->user_id=auth()->user()->id;
+        $groupuser->group_id=$group->id;
+        $groupuser->is_admin=true;
+        $groupuser->save();
+        $members=$group->users;
+        return redirect()->route('groups.show', ['id' => $group->id]);
     }
 
     /**
@@ -50,7 +64,9 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        $group=$group::find($id);
+        $url=route('groups.update');
+        return view('groups.update', ['title'=>Crypt::decrypt($group->title), 'description'=>Crypt::decrypt($group->description), 'url'=>$url]);
     }
 
     /**
@@ -62,7 +78,10 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $group=$group::find($id);
+        $group->title=Crypt::encrypt($request->title);
+        $group->description=Crypt::encrypt($request->description);
+        $group->save;
     }
 
     /**
@@ -73,6 +92,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group=Group::find($id);
+        $group->delete();
     }
 }

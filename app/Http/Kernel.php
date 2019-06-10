@@ -58,7 +58,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'card'=> \App\Http\Middleware\Card::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'isGroupAdmin:group' => \App\Http\Middleware\GroupAdmin::class,
+        'isGroupAdmin' => \App\Http\Middleware\GroupAdmin::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,

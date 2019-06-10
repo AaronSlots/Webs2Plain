@@ -27,10 +27,12 @@ Route::middleware('verified')->group(function(){
     Route::get('contacts/confirm/{token}', 'ContactController@confirm')->name('contacts.confirm');
     Route::match(['put','patch'],'contacts/{contact}/favourite', 'ContactController@favourite')->name('contacts.favourite');
 
-    Route::resource('groups', 'GroupController')->except('show');
-    Route::delete('groups/{group}/members/{member}', 'GroupController@destroyMember')->name('groups.members.destroy');
-    Route::get('groups/{group}/members/create', 'GroupController@createMember')->name('groups.members.create');
-    Route::post('groups/{group}/members/create', 'GroupController@storeMember')->name('groups.members.store');
-    Route::match(['put','patch'],'groups/{group}/members/{member}/admin', 'GroupController@adminMember')->name('groups.members.admin');
+    Route::resource('groups', 'GroupController')->only(['create','store']);
+    Route::group(['middleware'=>'isGroupAdmin:{group}'], function(){
+        Route::prefix('groups/{group}')->name('groups.')->group(function(){
+            Route::resource('members', 'MemberController')->except(['update','edit','show']);
+        });
+        Route::resource('groups', 'GroupController')->except(['index','show','create','store']);
+    });
     Route::delete('groups/{group}/leave', 'GroupController@leave')->name('groups.leave');
 });

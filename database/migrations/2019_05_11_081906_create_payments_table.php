@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->foreign('currency_code')->references('code')->on('currencies');
             $table->string('period')->nullable();
             $table->foreign('period')->references('period')->on('periods');
-            $table->date('startdate');
+            $table->date('created_at');
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\GroupUser;
+use \Auth;
 
 class GroupAdmin
 {
@@ -16,7 +17,9 @@ class GroupAdmin
      */
     public function handle($request, Closure $next, $group)
     {
-        if(GroupUser::find([auth()->user()->id,$group])->is_admin)
+        dd([$group->id,Auth::user()->id]);
+        $groupuser=GroupUser::where([['user_id',Auth::user()->id],['group_id',$group]])->first();
+        if($groupuser->is_admin)
             return $next($request);
         return redirect()->back();
     }
