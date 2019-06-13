@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\GroupUser;
-use \Auth;
 
 class GroupAdmin
 {
@@ -15,10 +14,10 @@ class GroupAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $group)
+    public function handle($request, Closure $next)
     {
-        dd([$group->id,Auth::user()->id]);
-        $groupuser=GroupUser::where([['user_id',Auth::user()->id],['group_id',$group]])->first();
+        $group=$request->route()->parameter('group');
+        $groupuser=GroupUser::find(auth()->user()->id,$group);
         if($groupuser->is_admin)
             return $next($request);
         return redirect()->back();

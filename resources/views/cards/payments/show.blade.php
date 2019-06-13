@@ -4,5 +4,5 @@
     @foreach ($payments as $payment)
         @include('partials.payment',['payment'=>$payment])
     @endforeach
-    @include('partials.create-payment')
+    @include('partials.create-payment',['card'=>$card])
     @stop

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Group;
+use App\GroupUser;
+use \Auth;
 
 class MemberController extends Controller
 {
@@ -25,8 +28,9 @@ class MemberController extends Controller
      */
     public function create($group)
     {
-        $contacts=Auth::user()->contacts;
-        return view('groups.members.add', ['group'=>$group,'contacts'=>$contacts]);
+        $contacts=Auth::user()->contacts->whereNotIn('id',GroupUser::where('group_id',(int)$group)->get()->pluck('user_id'))->pluck('contact')->pluck('fullname','id');
+        $url=route('groups.members.store',['group'=>$group]);
+        return view('groups.members.add', ['url'=>$url,'contacts'=>$contacts]);
     }
 
     /**
@@ -38,7 +42,11 @@ class MemberController extends Controller
      */
     public function store($group, Request $request)
     {
-        //
+        $groupuser=new GroupUser();
+        $groupuser->group_id=$group;
+        $groupuser->user_id=$request->member;
+        $groupuser->save();
+        return redirect()->route('groups.members.index', ['group'=>$group]);
     }
 
     /**
@@ -50,6 +58,7 @@ class MemberController extends Controller
      */
     public function destroy($group, $id)
     {
-        //
+        $group=GroupUser::find($id,$group);
+        $group->delete();
     }
 }

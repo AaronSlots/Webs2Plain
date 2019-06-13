@@ -10,7 +10,12 @@ class PaymentOption extends Model
     protected $primaryKey = 'name';
     protected $keyType = 'string';
 
-    public function countries(){
-        return $this->hasMany('App\PaymentOption_Country');
+    public function countries()
+    {
+        return $this->belongsToMany('App\Country','payment_option__countries');
+    }
+
+    public function currency(){
+        return $this->belongsTo('App\Currency');
     }
 }

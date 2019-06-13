@@ -11,6 +11,6 @@ class Group extends Model
 
     public function users()
     {
-        return $this->hasMany('App\GroupUser');
+        return $this->belongsToMany('App\User')->withPivot('contact_users','favourite');
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Group;
 use App\GroupUser;
 use \Crypt;
-use \Auth;
 
 class GroupController extends Controller
 {
@@ -53,7 +52,7 @@ class GroupController extends Controller
         $groupuser->is_admin=true;
         $groupuser->save();
         $members=$group->users;
-        return redirect()->route('groups.show', ['id' => $group->id]);
+        return redirect()->route('groups.members.index', ['id' => $group->id]);
     }
 
     /**

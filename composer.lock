@@ -4,8 +4,47 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82fc51a4ce9f0b9973be711ddb4a94a2",
+    "content-hash": "0cda5d587bcbd87007413121343007ae",
     "packages": [
+        {
+            "name": "alternativepayments/alternativepayments",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AlternativePayments/ap-php-sdk.git",
+                "reference": "3423a023c2ed6a2fa042fb5977edb854a084880f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AlternativePayments/ap-php-sdk/zipball/3423a023c2ed6a2fa042fb5977edb854a084880f",
+                "reference": "3423a023c2ed6a2fa042fb5977edb854a084880f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "AlternativePayments": "Lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alternative Payments Inc.",
+                    "email": "dev@alternativepayments.com",
+                    "homepage": "http://www.alternativepayments.com"
+                }
+            ],
+            "description": "Official PHP SDK for Alternative Payments API",
+            "homepage": "http://www.alternativepayments.com",
+            "time": "2017-09-27T15:06:09+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",

@@ -54,11 +54,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function groups()
     {
-        return $this->hasMany('App\GroupUser');
+        return $this->belongsToMany('App\Group')->withPivot('group_users','is_admin');
     }
 
     public function contacts()
     {
-        return $this->hasMany('App\ContactUser');
+        return $this->belongsToMany('App\User')->withPivot('contact_users','favourite');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo('App\Country');
     }
 }

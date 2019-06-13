@@ -19,16 +19,20 @@ Route::get('/', function()
 })->name('home');
 
 Route::middleware('verified')->group(function(){
-    Route::resource('cards', 'CardController');
-
-    //Route::resource('payments', 'PaymentController');
+    Route::resource('cards', 'CardController')->only(['index','create','store']);
+    Route::group(['middleware'=>'isCardOwner'], function(){
+        Route::prefix('cards/{card}')->name('cards.')->group(function(){
+            Route::resource('payments', 'PaymentController')->except(['update','edit','show']);
+        });
+        Route::resource('cards', 'CardController')->except(['index','show','create','store']);
+    });
 
     Route::resource('contacts', 'ContactController')->except(['edit','update','show']);
     Route::get('contacts/confirm/{token}', 'ContactController@confirm')->name('contacts.confirm');
     Route::match(['put','patch'],'contacts/{contact}/favourite', 'ContactController@favourite')->name('contacts.favourite');
 
-    Route::resource('groups', 'GroupController')->only(['create','store']);
-    Route::group(['middleware'=>'isGroupAdmin:{group}'], function(){
+    Route::resource('groups', 'GroupController')->only(['index','create','store']);
+    Route::group(['middleware'=>'isGroupAdmin'], function(){
         Route::prefix('groups/{group}')->name('groups.')->group(function(){
             Route::resource('members', 'MemberController')->except(['update','edit','show']);
         });

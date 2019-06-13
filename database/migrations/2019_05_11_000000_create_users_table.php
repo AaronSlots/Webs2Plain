@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('country_iso');
+            $table->foreign('country_iso')->references('iso')->on('countries');
             $table->string('password');
             $table->string('invite_number');
             $table->rememberToken();

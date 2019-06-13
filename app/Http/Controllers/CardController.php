@@ -5,14 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Card;
 use \Crypt;
-use \Cache;
 
 class CardController extends Controller
 {
-    public function __construct(){
-        $this->middleware('verified');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -48,19 +43,7 @@ class CardController extends Controller
         $card->description = Crypt::encrypt($request->description);
         $card->user_id=auth()->user()->id;
         $card->save();
-        return redirect(route('cards.show', ['card'=>$card]));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        Cache::forever('card_id', Crypt::encrypt($id));
-        return redirect('/payments');
+        return redirect()->route('cards.payments.index', ['card' => $card->id]);
     }
 
     /**
@@ -89,7 +72,7 @@ class CardController extends Controller
         $card->iban = Crypt::encrypt($request->iban);
         $card->description = Crypt::encrypt($request->description);
         $card->save();
-        return redirect(route('cards.show', ['card'=>$card]));
+        return redirect()->route('cards.payments.index', ['card' => $card->id]);
     }
 
     /**

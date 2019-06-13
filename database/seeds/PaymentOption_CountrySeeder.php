@@ -21,7 +21,7 @@ class PaymentOption_CountrySeeder extends Seeder
         $this->insert('BR','Boleto Bancario');
         $this->insert('BR','BrazilPay Bank Transfer');
         $this->insert('BR','BrazilPay Charge Card');
-        $this->insert_helper(\Country::isos(),'Bitcoin');
+        $this->insert_helper(App\Country::pluck('iso'),'Bitcoin');
         $this->insert('EG, JO, SA, AE','CashU');
         $this->insert('US','Credit Card');
         $this->insert('AR, AT, BE, HR, CY, CZ, DK, EE, FI, FR, DE, GI, GR, HU, IS, IE, IT, LV, LT, LU, MK, MT, NL, NO, PL, PT, RO, RS, SK, SI, ES, SE, CH, TN, TR, GB','DirectPayEU');

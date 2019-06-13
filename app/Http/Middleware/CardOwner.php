@@ -3,10 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use \Cache;
-use \Crypt;
+use App\Card;
 
-class Card
+class CardOwner
 {
     /**
      * Handle an incoming request.
@@ -17,10 +16,10 @@ class Card
      */
     public function handle($request, Closure $next)
     {
-        $id_crypt = Cache::get('card_id', null);
-        if($id_crypt != null && auth()->user()->cards->find(Crypt::decrypt($id_crypt)) != null)
+        $card_id=$request->route()->parameter('card');
+        $card=Card::find($card_id);
+        if(auth()->user()->cards->contains($card))
             return $next($request);
-        else
-            return '/cards';
+        return redirect()->back();
     }
 }

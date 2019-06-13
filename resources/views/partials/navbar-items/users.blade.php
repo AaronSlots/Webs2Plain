@@ -1,9 +1,13 @@
 <li class="nav-item">
-    <a class="nav-link" href="/contacts">{{ __('navbar.select_contact') }}</a>
+    <a class="nav-link" href="{{route('groups.index')}}">{{ __('navbar.select_group') }}</a>
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="/cards">{{ __('navbar.select_card') }}</a>
+    <a class="nav-link" href="{{route('contacts.index')}}">{{ __('navbar.select_contact') }}</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{route('cards.index')}}">{{ __('navbar.select_card') }}</a>
 </li>
 
 <li class="nav-item dropdown">
